@@ -1,19 +1,21 @@
 <?php
 
-use Illuminate\Http\Request;
+use App\Http\Controllers\AuthController;
+use App\Http\Controllers\CartController;
+use App\Http\Controllers\ProductController;
 use Illuminate\Support\Facades\Route;
 
-/*
-|--------------------------------------------------------------------------
-| API Routes
-|--------------------------------------------------------------------------
-|
-| Here is where you can register API routes for your application. These
-| routes are loaded by the RouteServiceProvider and all of them will
-| be assigned to the "api" middleware group. Make something great!
-|
-*/
+Route::post('login', [AuthController::class, 'login']);
 
-Route::middleware('auth:sanctum')->get('/user', function (Request $request) {
-    return $request->user();
+Route::group(['middleware' => ['jwt.verify']], function() {
+
+    Route::get('produtos', [ProductController::class, 'index']);
+    Route::get('produtos/{id}', [ProductController::class, 'show']);
+    Route::post('produtos', [ProductController::class, 'store']);
+    Route::put('produtos/{id}', [ProductController::class, 'update']);
+    Route::delete('produtos/{id}', [ProductController::class, 'destroy']);
+
+    Route::post('cart', [CartController::class, 'store']);
+    Route::get('cart', [CartController::class, 'index']);
+    Route::delete('cart/{id}', [CartController::class, 'destroy']);
 });
