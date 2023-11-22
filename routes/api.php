@@ -2,11 +2,12 @@
 
 use App\Http\Controllers\AuthController;
 use App\Http\Controllers\CartController;
+use App\Http\Controllers\CreateAccount;
 use App\Http\Controllers\ProductController;
 use Illuminate\Support\Facades\Route;
 
 Route::post('login', [AuthController::class, 'login']);
-
+Route::post('create', [CreateAccount::class, 'createAccount']);
 Route::group(['middleware' => ['jwt.verify']], function() {
 
     Route::get('produtos', [ProductController::class, 'index']);

@@ -11,11 +11,8 @@ class JwtMiddleware
 {
     public function handle(Request $request, Closure $next): Response
     {
-
         try {
-
             $user = JWTAuth::parseToken()->authenticate();
-
         } catch(\Exception $e) {
             return response()->json(['status' => 'token invalido!'], 401);
         }
